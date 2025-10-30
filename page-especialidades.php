@@ -42,10 +42,10 @@ if ($query->have_posts()) {
             ?>
 
             <div class="buscador">
-                <label class="floating-label" for="search"><?php echo esc_html($buscador['texto_interno']); ?></label>
+                <label for="search"><?php echo esc_html($buscador['titulo_buscador_espe']); ?></label>
 
                 <select id="search">
-                    <option value="" disabled selected hidden></option>
+                    <option value="" disabled selected><?php echo esc_html($buscador['texto_interno']); ?></option>
                     <?php foreach ($titulos as $item) : ?>
                         <option value="<?php echo esc_attr($item['id']); ?>">
                             <?php echo esc_html($item['title']); ?>
@@ -101,21 +101,11 @@ if ($query->have_posts()) {
     document.addEventListener("DOMContentLoaded", function() {
         // --- Hero Select ---
         const select = document.getElementById("search");
-        const label = document.querySelector(".floating-label");
 
-        function toggleLabel() {
-            if (select.value) label.classList.add("active");
-            else label.classList.remove("active");
-        }
-
-        toggleLabel();
         select.addEventListener("change", () => {
-            toggleLabel();
             paged = 1;
             cargarEspecialidades();
         });
-        select.addEventListener("focus", () => label.classList.add("active"));
-        select.addEventListener("blur", toggleLabel);
 
         // --- Paginación y AJAX ---
         let paged = 1;

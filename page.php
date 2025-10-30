@@ -180,80 +180,8 @@
                         <?php echo nl2br(esc_html(get_field('descripcion_contactanos'))); ?>
                     </p>
                 </div>
-                <div class="formulario">
-                    <?php
-                    $placeholders = get_field('formulario');
-                    ?>
 
-                    <?php if (!empty($placeholders['placeholder_nombre'])): ?>
-                        <div class="form-group">
-                            <label class="floating-label" for="nombre">
-                                <?php echo esc_html($placeholders['placeholder_nombre']); ?>
-                            </label>
-                            <input type="text" id="nombre">
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if (!empty($placeholders['placeholder_correo'])): ?>
-                        <div class="form-group">
-                            <label class="floating-label" for="correo">
-                                <?php echo esc_html($placeholders['placeholder_correo']); ?>
-                            </label>
-                            <input type="text" id="correo">
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if (!empty($placeholders['placeholder_telefono'])): ?>
-                        <div class="form-group">
-                            <label class="floating-label" for="telefono">
-                                <?php echo esc_html($placeholders['placeholder_telefono']); ?>
-                            </label>
-                            <input type="text" id="telefono">
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if (!empty($placeholders['asunto']['placeholder_asunto'])): ?>
-                        <div class="form-group">
-                            <label class="floating-label" for="asunto">
-                                <?php echo esc_html($placeholders['asunto']['placeholder_asunto']); ?>
-                            </label>
-                            <select id="asunto">
-                                <option value="" disabled selected hidden></option>
-                                <?php if (!empty($placeholders['asunto']['select_asuntos'])): ?>
-                                    <?php foreach ($placeholders['asunto']['select_asuntos'] as $item): ?>
-                                        <option value="<?php echo esc_attr($item['asunto']); ?>">
-                                            <?php echo esc_html($item['asunto']); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </select>
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if (!empty($placeholders['placeholder_mensaje'])): ?>
-                        <div class="form-group">
-                            <label class="floating-label" for="mensaje">
-                                <?php echo esc_html($placeholders['placeholder_mensaje']); ?>
-                            </label>
-                            <textarea id="mensaje"></textarea>
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if (!empty($placeholders['placeholder_check'])): ?>
-                        <div class="checkbox-group mg-b-2">
-                            <input type="checkbox" class="checkbox">
-                            <span><?php echo $placeholders['placeholder_check']; ?></span>
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if (!empty($placeholders['boton'])):
-                        $form_btn = $placeholders['boton']; ?>
-                        <a href="<?php echo esc_url($form_btn['enlace']); ?>"
-                            class="btn btn-form <?php echo esc_attr($form_btn['estilo']); ?>">
-                            <?php echo esc_html($form_btn['texto']); ?>
-                        </a>
-                    <?php endif; ?>
-                </div>
+                <?php echo do_shortcode('[contact-form-7 id="ccb18e4" title="Formulario de Contáctanos"]'); ?>
 
             </div>
         </div>
@@ -353,4 +281,5 @@ $icono_cerrar = get_field('icono_cerrar_modal');
             }
         }
     });
+
 </script>

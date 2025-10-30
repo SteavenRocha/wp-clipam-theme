@@ -43,18 +43,16 @@ if ($query->have_posts()) {
             ?>
 
             <div class="buscador">
-                <div class="form-group mg-b-2">
-                    <label class="floating-label" for="search-input"><?php echo esc_html($buscador['nombre']['texto_interno']); ?></label>
-
+                <div class="mg-b-2">
+                    <label for="search-input"><?php echo esc_html($buscador['nombre']['titulo_buscador_medico']); ?></label>
                     <input type="text" id="search-input" />
                 </div>
 
                 <div class="form-group">
-                    <label class="floating-label" for="search-select"><?php echo esc_html($buscador['especialidad']['texto_interno']); ?></label>
+                    <label for="search-select"><?php echo esc_html($buscador['especialidad']['titulo_buscador_espe']); ?></label>
 
                     <select id="search-select">
-                        <option value="" disabled selected hidden>
-                        </option>
+                        <option value="" disabled selected><?php echo esc_html($buscador['especialidad']['texto_interno']); ?></option>
 
                         <?php foreach ($titulos as $item) : ?>
                             <option value="<?php echo esc_attr($item['id']); ?>">
@@ -146,22 +144,6 @@ if ($query->have_posts()) {
                 searchSelect.value = especialidadParam;
             }
         }
-
-        // --- Hero Labels ---
-        const inputs = document.querySelectorAll("#search-select, #search-input");
-
-        inputs.forEach(input => {
-            const label = input.closest(".form-group").querySelector(".floating-label");
-
-            function toggleLabel() {
-                if (input.value.trim() !== "") label.classList.add("active");
-                else label.classList.remove("active");
-            }
-            toggleLabel();
-            input.addEventListener("input", toggleLabel);
-            input.addEventListener("focus", () => label.classList.add("active"));
-            input.addEventListener("blur", toggleLabel);
-        });
 
         // --- Variables de paginación ---
         let paged = 1;

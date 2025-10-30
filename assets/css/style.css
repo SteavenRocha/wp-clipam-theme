@@ -835,58 +835,170 @@ button {
   gap: 100px;
 }
 
-.formulario {
-  display: flex;
-  flex-direction: column;
-  gap: 1.8rem;
-}
-
-.form-group {
-  position: relative;
-}
-
-.checkbox-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 24px;
-  height: 24px;
-  border: 1px solid var(--primario-azul);
-  border-radius: 5px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  padding: 5px;
-}
-
-input[type="checkbox"]:checked::after {
-  content: "✔";
-  font-size: 18px;
-  color: var(--primario-azul);
-}
-
-input[type="checkbox"]:focus {
-  outline: none;
-}
-
-.checkbox-group a {
-  text-decoration: underline;
-}
-
 .textos {
   width: 50%;
 }
 
-.formulario {
+.wpcf7 {
   width: 50%;
 }
+
+.wpcf7 {
+  font-size: 1.5rem;
+}
+
+.wpcf7 label {
+  width: 100%;
+}
+
+.wpcf7 input,
+.wpcf7 select,
+.wpcf7 textarea,
+.hero .buscador select,
+.hero .buscador input {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--primario-azul);
+  padding: 12px 10px;
+  font-size: 1.6rem;
+  font-family: var(--fuente-principal);
+}
+
+.wpcf7 textarea {
+  resize: vertical;
+  min-height: 100px;
+  max-height: 300px;
+}
+
+.wpcf7 input:focus,
+.wpcf7 select:focus,
+.wpcf7 textarea:focus,
+.hero .buscador select:focus,
+.hero .buscador input:focus {
+  outline: 1px solid var(--primario-azul);
+}
+
+.wpcf7-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wpcf7 input[type="checkbox"] {
+  width: auto;
+  cursor: pointer;
+  transform: scale(1.5);
+  accent-color: var(--primario-azul);
+}
+
+.wpcf7 input[type="checkbox"]:focus {
+  outline: none;
+}
+
+.wpcf7-acceptance .wpcf7-list-item {
+  margin: 0;
+}
+
+.wpcf7-acceptance label {
+  display: flex;
+  gap: 8px;
+  font-size: 1.6rem;
+}
+
+.wpcf7-acceptance a {
+  font-weight: 600;
+}
+
+.wpcf7 .wpcf7-submit {
+  width: auto;
+  position: relative;
+  overflow: hidden;
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  font-size: 1.8rem;
+  line-height: 1.5;
+  cursor: pointer;
+  margin-top: 20px;
+  border: none;
+}
+
+.wpcf7 .wpcf7-submit.estilo_1 {
+  transition: filter .3s ease;
+  background-color: var(--primario-azul);
+  color: white;
+}
+
+.wpcf7 .wpcf7-submit.estilo_2 {
+  transition: filter .3s ease;
+  background-color: var(--secundario-azul-cielo);
+  color: white;
+}
+
+.wpcf7 .wpcf7-submit.estilo_3 {
+  transition: filter .3s ease;
+  background-color: var(--primario-turqueza);
+  color: var(--primario-azul);
+}
+
+.wpcf7 .wpcf7-submit.estilo_1:not(:disabled):hover {
+  filter: brightness(120%);
+}
+
+.wpcf7 .wpcf7-submit.estilo_2:not(:disabled):hover {
+  filter: brightness(90%);
+}
+
+.wpcf7 .wpcf7-submit.estilo_3:not(:disabled):hover {
+  filter: brightness(90%);
+}
+
+.wpcf7 form p:last-of-type {
+  position: relative;
+  width: max-content;
+}
+
+.wpcf7 .wpcf7-spinner {
+  position: absolute;
+  top: calc(50% + 10px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+}
+
+.wpcf7 form.submitting .wpcf7-submit {
+  color: transparent;
+  pointer-events: none;
+}
+
+.wpcf7 .wpcf7-response-output {
+  position: fixed;
+  z-index: 9;
+  top: 110px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-radius: 10px;
+  color: var(--blanco);
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+.wpcf7 form .wpcf7-response-output {
+  padding: 10px;
+  margin: 0;
+}
+
+.wpcf7 form.sent .wpcf7-response-output {
+  background-color: #46b450;
+}
+
+.wpcf7 form.invalid .wpcf7-response-output {
+  background-color: #ffb900;
+}
+
+/* .wpcf7 form.unaccepted .wpcf7-response-output,
+.wpcf7 form.payment-required .wpcf7-response-output {} */
 
 /* Pagina Nosotros */
 /* Hero */
@@ -1020,56 +1132,7 @@ input[type="checkbox"]:focus {
   display: flex;
   flex-direction: column;
   width: 85%;
-}
-
-select,
-input,
-textarea {
-  background-color: var(--blanco);
-  border: 1px solid var(--primario-azul);
-  border-radius: 16px;
-  padding: 16px;
-  font-size: 18px;
-  transition: box-shadow .3s ease;
-  color: var(--primario-azul);
-  width: 100%;
-}
-
-label {
-  position: absolute;
-  top: 50%;
-  left: 15px;
-  transform: translateY(-50%);
-  font-size: 16px;
-  color: #888;
-  pointer-events: none;
-  transition: 0.2s ease all;
-}
-
-select:hover,
-textarea:hover,
-input:hover {
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-}
-
-select:focus,
-textarea:focus,
-input:focus {
-  outline: 1px solid var(--primario-azul);
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-}
-
-/* .floating-label.active {
-  top: -15px;
-  font-size: 14px;
-} */
-
-.floating-label.active {
-  top: 0px;
-  font-size: 14px;
-  background-color: white;
-  padding: 0 .5rem;
-  border-radius: 8px;
+  font-size: 1.6rem;
 }
 
 /* Cards */
@@ -1746,8 +1809,15 @@ button:disabled {
     text-align: center;
   }
 
-  .formulario {
+  .wpcf7 {
     width: 100%;
+  }
+
+  .wpcf7 form p:last-of-type {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .btn-form {
