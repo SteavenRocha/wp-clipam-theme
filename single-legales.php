@@ -1,8 +1,8 @@
 <?php get_header(); ?>
 
-<main class="single-legales contenedor seccion pd-l-1 p-t">
+<main class="single-legales seccion p-t">
 
-    <section class="contenido-principal">
+    <section class="contenedor contenido-principal">
         <?php
         while (have_posts()): the_post();
         ?>

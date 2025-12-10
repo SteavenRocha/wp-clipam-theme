@@ -95,7 +95,7 @@
                     </div>
                 </div>
 
-                <!-- Redes Sociales -->
+                <!-- Redes Sociales / Libro de reclamaciones -->
                 <div class="column column-4">
                     <h4><?php echo esc_html($titulos['titulo_redes_sociales']); ?></h4>
 
@@ -120,15 +120,34 @@
                         }
                         ?>
                     </div>
+
+                    <!-- Libro de reclamaciones -->
+                    <div class="book-container">
+                        <?php
+                        $post_footer = get_field('post_footer', 'informacion-general');
+                        $libro_de_reclamaciones = $post_footer['libro_de_reclamaciones'];
+                        ?>
+
+                        <?php
+                        if ($libro_de_reclamaciones):
+                            foreach ($libro_de_reclamaciones as $book):
+                                $url = $book['url_formulario'];
+                        ?>
+                                <a href="<?php echo esc_url($url); ?>" rel="noopener" class="book">
+                                    <?php echo wp_get_attachment_image($book['imagen_formulario'], 'medium', false, ['class' => 'book-img']); ?>
+                                </a>
+                        <?php
+                            endforeach;
+                        endif;
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="bg-sub-footer">
-        <div class="contenedor contenido-sub-footer text-primary">
-            <p><?php echo esc_html(get_field('Copyright', 'informacion-general')); ?></p>
-        </div>
+    <div class="bg-post-footer">
+        <p class="contenedor text-primary copyright"><?php echo (esc_html($post_footer['copyright'])); ?></p>
     </div>
 </footer>
 

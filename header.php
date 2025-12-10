@@ -44,7 +44,9 @@
 
                 <div class="extra-menu-item">
                     <?php
-                    $boton_intranet = get_field('boton_intranet', 'informacion-general');
+                    $boton_intranet_grupo = get_field('boton_intranet_grupo', 'informacion-general');
+                    $boton_intranet = $boton_intranet_grupo['boton_intranet'];
+
                     $texto_btn_intranet = $boton_intranet['texto_boton_intranet'];
                     $estilo_btn_intranet = $boton_intranet['estilo_boton_intranet'];
                     ?>
@@ -56,9 +58,9 @@
                         </svg>
                     </button>
 
-                    <?php if (!empty($boton_intranet) && !empty($boton_intranet['sub_botones'])) : ?>
+                    <?php if (!empty($boton_intranet_grupo) && !empty($boton_intranet_grupo['sub_botones'])) : ?>
                         <div class="desplegable <?php echo esc_attr($estilo_btn_intranet); ?>">
-                            <?php foreach ($boton_intranet['sub_botones'] as $sub) :
+                            <?php foreach ($boton_intranet_grupo['sub_botones'] as $sub) :
                                 $texto_subBtn = isset($sub['texto_subBoton']) ? $sub['texto_subBoton'] : '';
                                 $url_subBtn   = isset($sub['url_subBoton']) ? $sub['url_subBoton'] : '#';
                             ?>

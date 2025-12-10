@@ -10,8 +10,8 @@ $args = array(
 $query = new WP_Query($args);
 ?>
 
-<main class="contenedor seccion pd-l-1 p-t">
-    <section class="hero bg-azul-cielo">
+<main class="seccion pd-l-1 p-t">
+    <section class="contenedor hero bg-azul-cielo">
         <div class="left text-white g-0">
             <?php if (get_field('titulo')) { ?>
                 <h1 class="tiny-lh"><?php the_field('titulo'); ?></h1>
@@ -32,7 +32,7 @@ $query = new WP_Query($args);
     </section>
 
     <!-- Listado de Servicios -->
-    <section class="servicios">
+    <section class="contenedor servicios">
 
         <ul class="listado-grid">
             <?php if ($query->have_posts()): ?>

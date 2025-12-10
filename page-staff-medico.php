@@ -23,9 +23,9 @@ if ($query->have_posts()) {
 }
 ?>
 
-<main class="seccion contenedor pd-l-1 p-t">
+<main class="seccion pd-l-1 p-t">
 
-    <section class="hero bg-turqueza">
+    <section class="contenedor hero bg-turqueza">
         <div class="left text-primary">
             <div>
                 <?php if (get_field('titulo')) { ?>
@@ -74,7 +74,7 @@ if ($query->have_posts()) {
     </section>
 
     <!-- Listado de Doctores -->
-    <section class="doctores">
+    <section class="contenedor doctores">
 
         <ul id="listado-doctores" class="listado-grid"> </ul> <!-- Renderizado de los Doctores -->
 
