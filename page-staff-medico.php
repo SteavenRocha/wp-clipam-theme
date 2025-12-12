@@ -45,7 +45,7 @@ if ($query->have_posts()) {
             <div class="buscador">
                 <div class="mg-b-2">
                     <label for="search-input"><?php echo esc_html($buscador['nombre']['titulo_buscador_medico']); ?></label>
-                    <input type="text" id="search-input" />
+                    <input type="text" id="search-input" placeholder="<?php echo esc_html($buscador['nombre']['texto_interno_nombre']); ?>"/>
                 </div>
 
                 <div class="form-group">

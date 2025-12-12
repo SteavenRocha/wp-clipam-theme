@@ -621,6 +621,7 @@ button {
   align-items: center;
   gap: 10px;
   transition: color .3s ease;
+  line-height: 1.5;
 }
 
 .footer .info:hover {

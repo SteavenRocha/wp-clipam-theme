@@ -11,7 +11,7 @@
 <body>
     <header class="header">
         <div class="contenedor barra-navegacion">
-            <div class="logo">
+            <a class="logo" href="<?php echo esc_url(home_url('/')); ?>">
                 <!-- Logo -->
                 <?php
                 $logo_header = get_field('logo_header', 'informacion-general');
@@ -19,7 +19,7 @@
                     echo wp_get_attachment_image($logo_header, 'full', false, array('class' => 'logo-header'));
                 endif;
                 ?>
-            </div>
+            </a>
 
             <!-- Navegacion -->
             <div class="menu-principal-container">

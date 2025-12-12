@@ -1,6 +1,6 @@
 <?php
 
-function cpam_setup()
+function clipam_setup()
 {
     // Imagenes Destacadas
     add_theme_support('post-thumbnails');
@@ -9,17 +9,17 @@ function cpam_setup()
     add_theme_support('title-tag');
 }
 
-add_action('after_setup_theme', 'cpam_setup');
+add_action('after_setup_theme', 'clipam_setup');
 
-function cpam_menus()
+function clipam_menus()
 {
     register_nav_menus(array(
-        'menu-principal' => __('Menú Principal', 'cpam'),
-        'menu-legales' => __('Menú Legales', 'cpam')
+        'menu-principal' => __('Menú Principal', 'clipam'),
+        'menu-legales' => __('Menú Legales', 'clipam')
     ));
 }
 
-add_action('init', 'cpam_menus');
+add_action('init', 'clipam_menus');
 
 // Ocultar "Entradas" del menú de administración
 function quitar_menu_entradas()
@@ -29,13 +29,13 @@ function quitar_menu_entradas()
 
 add_action('admin_menu', 'quitar_menu_entradas');
 
-function cpam_scripts_styles()
+function clipam_scripts_styles()
 {
     wp_enqueue_style('style', get_template_directory_uri() . '/assets/css/style.css', array(), '1.0.0');
     // wp_enqueue_style('style', get_stylesheet_uri(), array(), '1.0.0'); // estilos ubicado en la carpeta raiz
 }
 
-add_action('wp_enqueue_scripts', 'cpam_scripts_styles');
+add_action('wp_enqueue_scripts', 'clipam_scripts_styles');
 
 /* SWIPER */
 function enqueue_swiper_assets()
@@ -263,3 +263,45 @@ function cargar_doctores_ajax()
 // Para usuarios logueados y no logueados
 add_action('wp_ajax_nopriv_cargar_doctores', 'cargar_doctores_ajax');
 add_action('wp_ajax_cargar_doctores', 'cargar_doctores_ajax');
+
+// Shortcode para el formulario de libro de reclamaciones
+add_shortcode('acf_clipam_data', function () {
+
+    $data = [
+        'ruc'          => get_field('ruc', 'informacion-general'),
+        'razon_social' => get_field('razon_social', 'informacion-general'),
+        'direccion'    => get_field('direccion', 'informacion-general'),
+    ];
+
+    return wp_json_encode($data);
+});
+
+add_filter('wpcf7_form_tag', function ($tag) {
+
+    $json = do_shortcode('[acf_clipam_data]');
+    $data = json_decode($json, true);
+
+    if (!is_array($data)) {
+        return $tag;
+    }
+
+    switch ($tag['name']) {
+
+        case 'ruc-responsable':
+            $tag['values'] = [$data['ruc']];
+            $tag['raw_values'] = [$data['ruc']];
+            break;
+
+        case 'razon-social-responsable':
+            $tag['values'] = [$data['razon_social']];
+            $tag['raw_values'] = [$data['razon_social']];
+            break;
+
+        case 'direccion-responsable':
+            $tag['values'] = [$data['direccion']];
+            $tag['raw_values'] = [$data['direccion']];
+            break;
+    }
+
+    return $tag;
+});

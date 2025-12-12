@@ -2,7 +2,7 @@
     <div class="bg-footer">
         <div class="contenedor contenido-footer text-white big-lh">
 
-            <div class="column-logo">
+            <a class="column-logo" href="<?php echo esc_url(home_url('/')); ?>">
                 <!-- Logo -->
                 <?php
                 $logo_footer = get_field('logo', 'informacion-general');
@@ -10,7 +10,7 @@
                     echo wp_get_attachment_image($logo_footer, 'full', false, array('class' => 'logo-footer'));
                 endif;
                 ?>
-            </div>
+            </a>
 
             <!-- TITULOS DE LOS ENLACES -->
             <?php $titulos = get_field('titulos__detalles', 'informacion-general'); ?>
