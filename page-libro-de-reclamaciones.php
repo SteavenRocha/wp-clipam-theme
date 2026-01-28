@@ -21,9 +21,19 @@
         </div>
     </section>
 
-    <section class="contenedor">
+    <section class="form__book__container contenedor">
         <?php echo do_shortcode('[contact-form-7 id="8d97d9a" title="Formulario del Libro de Reclamaciones"]'); ?>
     </section>
 </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fecha = new Date();
+        const formato = fecha.toLocaleDateString('es-PE');
+
+        document.getElementById('fecha-actual').textContent = formato;
+        document.getElementById('fecha-envio').value = formato;
+    });
+</script>
 
 <?php get_footer(); ?>

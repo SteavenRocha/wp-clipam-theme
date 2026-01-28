@@ -197,7 +197,7 @@ button {
 }
 
 .p-t {
-  padding-top: 17rem;
+  padding-top: 15.85rem;
 }
 
 .pb-0 {
@@ -789,7 +789,7 @@ button {
   background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
 
-.group {
+.convenios .group {
   display: flex;
   gap: 6rem;
   animation: scroll 20s linear infinite;
@@ -797,18 +797,18 @@ button {
   margin: 2rem;
 }
 
-.group:hover {
+.convenios .group:hover {
   animation-play-state: paused;
 }
 
-.group a {
+.convenios .group a {
   display: flex;
   align-items: center;
   justify-content: center;
   transition: scale .3s ease;
 }
 
-.group a:hover {
+.convenios .group a:hover {
   scale: 1.2;
 }
 
@@ -866,7 +866,7 @@ button {
   width: 50%;
 }
 
-.wpcf7 {
+#contactanos .wpcf7 {
   width: 50%;
 }
 
@@ -981,7 +981,7 @@ button {
   filter: brightness(90%);
 }
 
-.wpcf7 form p:last-of-type {
+#contactanos .wpcf7 form p:last-of-type {
   position: relative;
   width: max-content;
 }
@@ -1748,6 +1748,64 @@ button:disabled {
   line-height: 1;
 }
 
+/* Libro de reclamaciones */
+.form__book__container {
+  padding: 80px 80px;
+  color: var(--primario-azul);
+  border: 1px solid rgba(0, 0, 0, 0.1);;
+  border-radius: 50px;
+  margin-top: 80px;
+}
+
+.form__book__container form {
+  gap: 50px;
+}
+
+.form__book__container fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.form__book__container .title__fieldset {
+  font-family: var(--fuente-headings);
+  font-size: clamp(2rem, 4vw, 2.3rem);
+  font-weight: 600;
+}
+
+.form__book__container .group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.form__book__container .row {
+  display: flex;
+  gap: 20px;
+}
+
+.form__book__container .col {
+  width: 100%;
+}
+
+.form__book__container input[readonly] {
+  background-color: #f3f4f6;
+}
+
+.form__book__container input[readonly]:focus {
+  outline: none;
+}
+
+.form__book__container .group__title {
+  line-height: 1.25;
+}
+
+.form__book__container .date-book {
+  font-size: clamp(1.6rem, 4vw, 1.8rem);
+  font-weight: 400;
+}
+
 @media (max-width: 1024px) {
   .error-404 {
     height: calc(100svh - 240px);
@@ -1836,7 +1894,7 @@ button:disabled {
     text-align: center;
   }
 
-  .wpcf7 {
+  #contactanos .wpcf7 {
     width: 100%;
   }
 
