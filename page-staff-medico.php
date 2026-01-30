@@ -45,7 +45,7 @@ if ($query->have_posts()) {
             <div class="buscador">
                 <div class="mg-b-2">
                     <label for="search-input"><?php echo esc_html($buscador['nombre']['titulo_buscador_medico']); ?></label>
-                    <input type="text" id="search-input" placeholder="<?php echo esc_html($buscador['nombre']['texto_interno_nombre']); ?>"/>
+                    <input type="text" id="search-input" placeholder="<?php echo esc_html($buscador['nombre']['texto_interno_nombre']); ?>" />
                 </div>
 
                 <div class="form-group">
@@ -83,7 +83,6 @@ if ($query->have_posts()) {
         <?php
         $icono_izquierda = get_field('icono_izquierda', 'informacion-general');
         $icono_derecha = get_field('icono_derecha', 'informacion-general');
-        $icono_cerrar = get_field('icono_cerrar_modal');
         ?>
         <div id="paginacion" class="paginacion">
             <button id="prev-page" title="Atrás">
@@ -113,7 +112,9 @@ if ($query->have_posts()) {
     <div class="modal__overlay" tabindex="-1" data-micromodal-close>
         <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-doctor-title">
             <header class="modal__header">
-                <img src="<?php echo esc_url($icono_cerrar); ?>" alt="" class="modal__close icono" aria-label="Cerrar" data-micromodal-close>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="modal__close icono" data-micromodal-close>
+                    <path fill="var(--primario-azul)" d="M5.293 5.293a1 1 0 0 1 1.414 0L12 10.586l5.293-5.293a1 1 0 1 1 1.414 1.414L13.414 12l5.293 5.293a1 1 0 0 1-1.414 1.414L12 13.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L10.586 12L5.293 6.707a1 1 0 0 1 0-1.414" />
+                </svg>
             </header>
             <main class="modal__content text-primary" id="modal-doctor-content">
                 <img id="modal-doctor-img" alt="" class="modal-imagen-doctor">

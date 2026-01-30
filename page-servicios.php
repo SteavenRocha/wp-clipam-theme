@@ -37,12 +37,10 @@ $query = new WP_Query($args);
         <ul class="listado-grid">
             <?php if ($query->have_posts()): ?>
                 <?php
-                $i = 0; 
+                $i = 0;
                 ?>
                 <?php while ($query->have_posts()): $query->the_post(); ?>
                     <?php
-                    $image_id = get_field('imagen');
-                    $image_html = $image_id ? wp_get_attachment_image($image_id, 'full', false, ['class' => 'imagen']) : '';
 
                     $li_class = 'text-white';
                     if ($i % 2 === 0) {
@@ -55,8 +53,15 @@ $query = new WP_Query($args);
                     ?>
                     <li class="card <?php echo $li_class; ?>">
                         <div class="content-img">
-                            <?php echo $image_html; ?>
-                            <?php the_field('descripcion'); ?>
+                            <?php
+                            if (has_post_thumbnail()) {
+                                echo get_the_post_thumbnail(get_the_ID(), 'full', ['class' => 'imagen']);
+                            } else {
+                                $fallback = get_template_directory_uri() . '/assets/img/img-fallback.jpg';
+                                echo '<img src="' . esc_url($fallback) . '" alt="Imagen por defecto" class="imagen">';
+                            }
+                            ?>
+                            <p><?php the_field('descripcion'); ?></p>
                         </div>
 
                         <h3 class="<?php echo $h3_bg_class; ?> mb-0 <?php echo $h3_text_class; ?>">
@@ -72,5 +77,33 @@ $query = new WP_Query($args);
     </section>
     <!-- Fin Listado de Servicios -->
 </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const isMobile =
+            window.matchMedia('(max-width: 767px)').matches &&
+            window.matchMedia('(hover: none)').matches &&
+            window.matchMedia('(pointer: coarse)').matches;
+
+        if (!isMobile) return;
+
+        const cards = document.querySelectorAll('.servicios .card');
+        if (!cards.length) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    entry.target.classList.toggle('is-active', entry.isIntersecting);
+                });
+            }, {
+                threshold: 0.9,
+            }
+        );
+
+        cards.forEach(card => observer.observe(card));
+
+    });
+</script>
 
 <?php get_footer(); ?>

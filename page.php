@@ -81,7 +81,6 @@
             <div class="carousel-wrapper">
                 <div class="group">
                     <?php
-                    // Primer grupo
                     while (have_rows('marcas')): the_row();
                         $logo = get_sub_field('imagen');
                         $url = get_sub_field('url');
@@ -97,10 +96,8 @@
                         endif;
                     endwhile;
 
-                    // Reiniciamos y pintamos duplicado
                     reset_rows();
 
-                    // Segundo grupo (aria-hidden)
                     while (have_rows('marcas')): the_row();
                         $logo = get_sub_field('imagen');
                         $url = get_sub_field('url');
@@ -153,9 +150,16 @@
                         <?php if ($card_boton):
                             $btn_url = esc_url($card_boton['enlace']);
                             $btn_text = esc_html($card_boton['texto']);
-                            $btn_style = esc_attr($card_boton['estilo']);
+                            $btn_target = esc_attr($card_boton['target']);
                         ?>
-                            <a href="<?php echo $btn_url; ?>" class="btn <?php echo $btn_style; ?>">
+                            <a
+                                href="<?php echo $btn_url; ?>"
+                                class="btn estilo_1"
+                                <?php
+                                if ($btn_target === 'blank') {
+                                    echo 'target="_blank" rel="noopener noreferrer"';
+                                }
+                                ?>>
                                 <?php echo $btn_text; ?>
                             </a>
                         <?php endif; ?>
@@ -188,15 +192,14 @@
     </section>
 </main>
 
-<?php
-$icono_cerrar = get_field('icono_cerrar_modal');
-?>
 <!-- Modal -->
 <div class="modal micromodal-slide modal-1" id="modal-1" aria-hidden="true">
     <div class="modal__overlay" tabindex="-1" data-micromodal-close>
         <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-title">
             <header class="modal__header">
-                <img src="<?php echo esc_url($icono_cerrar); ?>" alt="" class="modal__close icono" aria-label="Cerrar" data-micromodal-close>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="modal__close icono" data-micromodal-close>
+                    <path fill="white" d="M5.293 5.293a1 1 0 0 1 1.414 0L12 10.586l5.293-5.293a1 1 0 1 1 1.414 1.414L13.414 12l5.293 5.293a1 1 0 0 1-1.414 1.414L12 13.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L10.586 12L5.293 6.707a1 1 0 0 1 0-1.414" />
+                </svg>
             </header>
             <main class="modal__content" id="modal-content">
 
@@ -281,5 +284,4 @@ $icono_cerrar = get_field('icono_cerrar_modal');
             }
         }
     });
-
 </script>

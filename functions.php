@@ -37,6 +37,14 @@ function clipam_scripts_styles()
 
 add_action('wp_enqueue_scripts', 'clipam_scripts_styles');
 
+/* JS */
+function clipam_scripts_js()
+{
+    wp_enqueue_script('main-js', get_template_directory_uri() . '/assets/js/main.js', [], null, true);
+}
+
+add_action('wp_enqueue_scripts', 'clipam_scripts_js');
+
 /* SWIPER */
 function enqueue_swiper_assets()
 {
@@ -52,6 +60,7 @@ function enqueue_modal_assets()
     wp_enqueue_script('micromodal', get_template_directory_uri() . '/assets/js/micromodal.min.js', [], null, true);
     wp_add_inline_script('micromodal', 'MicroModal.init();');
 }
+
 add_action('wp_enqueue_scripts', 'enqueue_modal_assets');
 
 // PAGINACIÓN ESPECIALIDADES
@@ -305,3 +314,40 @@ add_filter('wpcf7_form_tag', function ($tag) {
 
     return $tag;
 });
+
+/* Obtener ID de un video de Youtube de cualqueir URL valida */
+function get_youtube_id($url)
+{
+    preg_match(
+        '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i',
+        $url,
+        $match
+    );
+
+    return $match[1] ?? false;
+}
+
+/* Cambio de logo wp-admin */
+function custom_login_logo()
+{
+?>
+    <style type="text/css">
+        #login h1 a {
+            background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/img/LOGO_Y_VARIABLES-0001_small.png');
+            background-size: contain;
+            width: 100%;
+            height: 80px;
+        }
+    </style>
+<?php
+}
+
+add_filter('login_headerurl', function () {
+    return home_url();
+});
+
+add_filter('login_headertext', function () {
+    return get_bloginfo('name');
+});
+
+add_action('login_enqueue_scripts', 'custom_login_logo');
