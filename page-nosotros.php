@@ -15,7 +15,6 @@ $query = new WP_Query($args);
 ?>
 
 <main class="seccion pb-0 nosotros p-t">
-
     <section class="contenedor hero-media">
         <?php
         $video_url = get_field('url_video');

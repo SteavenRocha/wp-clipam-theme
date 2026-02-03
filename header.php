@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--  <title>Document</title> -->
     <?php wp_head(); ?>
 </head>
 
@@ -48,10 +47,9 @@
                     $boton_intranet = $boton_intranet_grupo['boton_intranet'];
 
                     $texto_btn_intranet = $boton_intranet['texto_boton_intranet'];
-                    $estilo_btn_intranet = $boton_intranet['estilo_boton_intranet'];
                     ?>
 
-                    <button class="btn tiny-btn <?php echo esc_attr($estilo_btn_intranet); ?> toggle-desplegable">
+                    <button class="btn tiny-btn estilo_3 toggle-desplegable">
                         <?php echo esc_html($texto_btn_intranet); ?>
                         <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 48 48">
                             <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M36 18L24 30L12 18" />
@@ -59,7 +57,7 @@
                     </button>
 
                     <?php if (!empty($boton_intranet_grupo) && !empty($boton_intranet_grupo['sub_botones'])) : ?>
-                        <div class="desplegable <?php echo esc_attr($estilo_btn_intranet); ?>">
+                        <div class="desplegable estilo_3">
                             <?php foreach ($boton_intranet_grupo['sub_botones'] as $sub) :
                                 $texto_subBtn = isset($sub['texto_subBoton']) ? $sub['texto_subBoton'] : '';
                                 $url_subBtn   = isset($sub['url_subBoton']) ? $sub['url_subBoton'] : '#';

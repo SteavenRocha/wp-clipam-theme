@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const texto = output.innerText.trim();
         if (!texto) return;
 
-        /*  if (cf7Estado === 'invalid') {
-             output.textContent = '';
-             output.style.display = 'none';
-             return;
-         } */
+        if (cf7Estado === 'invalid') {
+            output.textContent = '';
+            output.style.display = 'none';
+            return;
+        }
 
         if (output.querySelector('.cf7-msg')) return;
 
@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let iconSvg = '';
 
         switch (cf7Estado) {
-            case 'invalid':
-                /* case 'mailfailed': */
+            /* case 'invalid': */
+            case 'mailfailed':
                 output.classList.add('is-error');
                 iconSvg = `
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

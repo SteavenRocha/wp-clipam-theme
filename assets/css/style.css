@@ -74,6 +74,12 @@ h1 {
   font-size: clamp(3.5rem, 4vw + 1rem, 4.8rem);
 }
 
+.hero h1 {
+  hyphens: auto;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
 h2 {
   font-size: 3rem;
 }
@@ -114,6 +120,58 @@ img {
 button {
   all: unset;
   cursor: pointer;
+}
+
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 1024px) {
+  .table-scroll::before {
+    content: "← desliza →";
+    position: sticky;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0 10px;
+    font-size: 12px;
+    color: #555;
+    border-radius: 999px;
+    z-index: 2;
+    pointer-events: none;
+  }
+}
+
+table {
+  width: 100%;
+  max-width: 100%;
+  min-width: 922px;
+  overflow: hidden;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  table-layout: fixed;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  vertical-align: top;
+  word-break: break-word;
+  white-space: normal;
+}
+
+table th {
+  font-weight: 600;
+  text-align: left;
+}
+
+table thead tr td {
+  background-color: #f1f3f5;
 }
 
 .btn {
@@ -1273,9 +1331,30 @@ button {
   font-size: 1.6rem;
 }
 
+#especialidades,
+#doctores {
+  position: relative;
+  scroll-margin-top: 120px;
+}
+
+.back-btn {
+  position: absolute;
+  top: -35px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: rgba(0, 0, 0, 0.329);
+}
+
+.back-btn svg {
+  width: 10px;
+  height: auto;
+}
+
 /* Cards */
 .sin-especialidades,
 .sin-doctores {
+  margin: 10rem 0;
   display: none;
   font-size: 20px;
   color: #555;
@@ -1529,7 +1608,7 @@ button:disabled {
   position: absolute;
   right: 0;
   top: 0;
-  margin: 2rem;
+  margin: 1.25rem;
   cursor: pointer;
   z-index: 10;
   transition: transform .3s ease;
@@ -1564,7 +1643,10 @@ button:disabled {
 .modal__content__cuerpo {
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 30px;
+  max-width: 100%;
+  padding-right: 40px;
 }
 
 .modal__content .detalles {
@@ -1743,11 +1825,11 @@ button:disabled {
 .contenido_WYSIWYG a {
   color: var(--primario-azul);
   text-decoration: underline;
-  transition: color 0.3s ease;
+  transition: filter 0.3s ease;
 }
 
 .contenido_WYSIWYG a:hover {
-  color: var(--secundario-azul-cielo);
+  filter: brightness(80%);
 }
 
 /* ASIDE */
@@ -2081,6 +2163,10 @@ button:disabled {
   .hero .right {
     height: 100%;
   }
+
+  .modal__content__cuerpo {
+    max-width: 50%;
+  }
 }
 
 /* Celulares */
@@ -2146,6 +2232,10 @@ button:disabled {
   .contenido-footer {
     flex-direction: column;
   }
+
+  .modal__content__cuerpo {
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -2184,7 +2274,7 @@ button:disabled {
 
 @media (max-width: 768px) {
   .especialidades .card .contenido {
-    max-height: 400px;
+    max-height: 100%;
   }
 
   .card .bg-contenido {
@@ -2205,7 +2295,7 @@ button:disabled {
 @media (max-width: 480px) {
   .especialidades .card .contenido {
     flex-direction: column;
-    max-height: 600px;
+    /* max-height: 600px; */
   }
 
   .card .bg-contenido {
@@ -2214,6 +2304,10 @@ button:disabled {
 
   .card .imagen {
     width: 100%;
+  }
+
+  .especialidades .card .imagen {
+    max-height: 310px;
   }
 }
 

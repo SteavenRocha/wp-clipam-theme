@@ -2,7 +2,7 @@
 
 <main class="seccion pb-0 p-t">
 
-    <section class="contenedor">
+    <section class="contenedor hero">
         <!-- Slider desde el Repeater -->
         <?php if (have_rows('slider')): ?>
             <div class="swiper">

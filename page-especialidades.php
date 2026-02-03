@@ -65,16 +65,19 @@ if ($query->have_posts()) {
     </section>
 
     <!-- Listado de Especialidades -->
-    <section class="contenedor especialidades">
+    <section class="contenedor especialidades" id="especialidades">
+
+        <button id="ver-todas" class="back-btn" style="display:none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="128" viewBox="0 0 12 24">
+                <path fill="currentColor" fill-rule="evenodd" d="m3.343 12l7.071 7.071L9 20.485l-7.778-7.778a1 1 0 0 1 0-1.414L9 3.515l1.414 1.414z" />
+            </svg>
+            <span>Atrás</span>
+        </button>
 
         <ul id="listado-especialidades" class="listado-grid"> </ul> <!-- Renderizado de las especialidades -->
 
         <p id="sin-especialidades" class="sin-especialidades"></p> <!-- Renderizado descripción sin especialidades -->
 
-        <?php
-        $icono_izquierda = get_field('icono_izquierda', 'informacion-general');
-        $icono_derecha = get_field('icono_derecha', 'informacion-general');
-        ?>
         <div id="paginacion" class="paginacion">
             <button id="prev-page" title="Atrás">
                 <svg width="65" height="38" viewBox="0 0 65 38" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -101,6 +104,7 @@ if ($query->have_posts()) {
     document.addEventListener("DOMContentLoaded", function() {
         // --- Hero Select ---
         const select = document.getElementById("search");
+        const verTodasBtn = document.getElementById("ver-todas");
 
         select.addEventListener("change", () => {
             paged = 1;
@@ -110,6 +114,7 @@ if ($query->have_posts()) {
         // --- Paginación y AJAX ---
         let paged = 1;
         let maxPages = 1;
+        let isFirstLoad = true;
 
         const listado = document.getElementById("listado-especialidades");
         const vacio = document.getElementById("sin-especialidades");
@@ -149,8 +154,10 @@ if ($query->have_posts()) {
 
                         if (especialidadID) {
                             paginacion.style.display = "none";
+                            verTodasBtn.style.display = "inline-flex";
                         } else {
                             paginacion.style.display = "flex";
+                            verTodasBtn.style.display = "none";
                         }
                     }
 
@@ -158,6 +165,12 @@ if ($query->have_posts()) {
                     totalPage.textContent = maxPages;
                     prevBtn.disabled = paged <= 1;
                     nextBtn.disabled = paged >= maxPages;
+
+                    if (!isFirstLoad) {
+                        scrollToEspecialidades();
+                    }
+
+                    isFirstLoad = false;
                 });
         }
 
@@ -175,8 +188,23 @@ if ($query->have_posts()) {
             }
         });
 
+        verTodasBtn.addEventListener("click", () => {
+            select.value = "";
+            paged = 1;
+            cargarEspecialidades();
+        });
+
         cargarEspecialidades();
     });
+
+    function scrollToEspecialidades() {
+        const section = document.getElementById('especialidades');
+        if (!section) return;
+
+        section.scrollIntoView({
+            block: 'start'
+        });
+    }
 </script>
 
 <?php get_footer(); ?>

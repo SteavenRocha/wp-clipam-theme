@@ -147,7 +147,7 @@
     </div>
 
     <div class="bg-post-footer">
-        <p class="contenedor text-primary copyright"><?php echo (esc_html($post_footer['copyright'])); ?></p>
+        <p class="contenedor text-primary copyright">© <?php echo date('Y'); ?> <?php echo (esc_html($post_footer['copyright'])); ?></p>
     </div>
 </footer>
 

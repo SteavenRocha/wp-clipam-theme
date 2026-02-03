@@ -21,6 +21,24 @@ function clipam_menus()
 
 add_action('init', 'clipam_menus');
 
+function clipam_filtrar_menu_paginas_no_publicadas($items, $args) {
+
+    foreach ($items as $key => $item) {
+
+        if ($item->type === 'post_type') {
+
+            $post = get_post($item->object_id);
+
+            if (!$post || $post->post_status !== 'publish') {
+                unset($items[$key]);
+            }
+        }
+    }
+
+    return $items;
+}
+add_filter('wp_nav_menu_objects', 'clipam_filtrar_menu_paginas_no_publicadas', 20, 2);
+
 // Ocultar "Entradas" del menú de administración
 function quitar_menu_entradas()
 {
@@ -48,8 +66,8 @@ add_action('wp_enqueue_scripts', 'clipam_scripts_js');
 /* SWIPER */
 function enqueue_swiper_assets()
 {
-    wp_enqueue_style('swiper-css', get_template_directory_uri() . '/assets/css/swiper-bundle.min.css');
-    wp_enqueue_script('swiper-js', get_template_directory_uri() . '/assets/js/swiper-bundle.min.js', [], null, true);
+    wp_enqueue_style('swiper-css', get_template_directory_uri() . '/assets/vendor/css/swiper-bundle.min.css');
+    wp_enqueue_script('swiper-js', get_template_directory_uri() . '/assets/vendor/js/swiper-bundle.min.js', [], null, true);
 }
 
 add_action('wp_enqueue_scripts', 'enqueue_swiper_assets');
@@ -57,7 +75,7 @@ add_action('wp_enqueue_scripts', 'enqueue_swiper_assets');
 /* MICROMODAL */
 function enqueue_modal_assets()
 {
-    wp_enqueue_script('micromodal', get_template_directory_uri() . '/assets/js/micromodal.min.js', [], null, true);
+    wp_enqueue_script('micromodal', get_template_directory_uri() . '/assets/vendor/js/micromodal.min.js', [], null, true);
     wp_add_inline_script('micromodal', 'MicroModal.init();');
 }
 
@@ -89,20 +107,14 @@ function cargar_especialidades_ajax()
     if ($query->have_posts()) :
         while ($query->have_posts()) : $query->the_post();
 
-            /* LOCAL */
             $image_html = '';
-            $image_id = get_field('imagen');
-            if ($image_id) {
-                $image_html = wp_get_attachment_image($image_id, 'full', false, ['class' => 'imagen']);
-            }
 
-            /* SHARED */
-            /* $image_html = '';
-            $image_id = get_field('imagen');
-            if ($image_id) {
-                $image_url = wp_get_attachment_image_url($image_id, 'full'); // URL absoluta
-                $image_html = '<img src="' . esc_url($image_url) . '" alt="' . esc_attr(get_the_title()) . '" class="imagen">';
-            } */
+            if (has_post_thumbnail()) {
+                $image_html = get_the_post_thumbnail(get_the_ID(), 'full', ['class' => 'imagen']);
+            } else {
+                $fallback = get_template_directory_uri() . '/assets/img/img-fallback.jpg';
+                $image_html = '<img src="' . esc_url($fallback) . '" alt="Imagen por defecto" class="imagen">';
+            }
 
             $staff_page = get_page_by_path('staff-medico');
             $staff_url = $staff_page ? get_permalink($staff_page->ID) : '#';
@@ -113,7 +125,7 @@ function cargar_especialidades_ajax()
 
             if ($boton) {
                 $boton_html = '<a href="' . esc_url($staff_url . '?especialidad=' . get_the_ID()) . '" 
-                           class="btn ' . esc_attr($boton['estilo']) . '" 
+                           class="btn estilo_3" 
                            data-especialidad-id="' . get_the_ID() . '">
                             ' . esc_html($boton['texto']) . '
                         </a>';
@@ -196,13 +208,12 @@ function cargar_doctores_ajax()
         while ($query->have_posts()) : $query->the_post();
 
             $image_html = '';
-            $image_url = '';
-            $image_alt  = '';
-            $image_id   = get_field('imagen');
-            if ($image_id) {
-                $image_html = wp_get_attachment_image($image_id, 'full', false, ['class' => 'imagen']);
-                $image_url  = wp_get_attachment_image_url($image_id, 'full');
-                $image_alt  = get_post_meta($image_id, '_wp_attachment_image_alt', true);
+
+            if (has_post_thumbnail()) {
+                $image_html = get_the_post_thumbnail(get_the_ID(), 'full', ['class' => 'imagen modal-imagen-doctor']);
+            } else {
+                $fallback = get_template_directory_uri() . '/assets/img/med-fallback.jpg';
+                $image_html = '<img src="' . esc_url($fallback) . '" alt="Imagen por defecto" class="imagen modal-imagen-doctor">';
             }
 
             $staff_page = get_page_by_path('staff-medico');
@@ -220,18 +231,23 @@ function cargar_doctores_ajax()
             }
 
             // Documentos
+            $docs = [];
             $docs_html = '';
             if (have_rows('documentos')) {
-                $docs = [];
                 while (have_rows('documentos')) : the_row();
-                    $nombre_doc = get_sub_field('nombre_documento');
-                    $numero = get_sub_field('n_documento');
-                    if ($nombre_doc && $numero) {
-                        $docs[] = '<strong>' . esc_html($nombre_doc) . ':</strong> ' . esc_html($numero);
+                    $cmp = get_sub_field('cmp');
+                    $rne = get_sub_field('rne');
+
+                    if (!empty($cmp)) {
+                        $docs[] = '<strong>CMP:</strong> ' . esc_html($cmp);
+                    }
+
+                    if (!empty($rne)) {
+                        $docs[] = '<strong>RNE:</strong> ' . esc_html($rne);
                     }
                 endwhile;
                 if (!empty($docs)) {
-                    $docs_html .= '<p class="documentos">' . implode(' / ', $docs) . '</p>';
+                    $docs_html = '<p class="documentos">' . implode(' / ', $docs) . '</p>';
                 }
             }
 
@@ -251,8 +267,7 @@ function cargar_doctores_ajax()
                                     data-nombre="' . esc_attr(get_the_title()) . '"
                                     data-especialidades="' . esc_attr($especialidades_html) . '"
                                     data-documentos="' . esc_attr($docs_html) . '"
-                                    data-imagen="' . esc_url($image_url) . '"
-                                    data-alt="' . esc_attr($image_alt) . '"
+                                    data-imagen="' . esc_attr($image_html) . '"
                                     data-detalles="' . $data_detalles . '"
                                 >' . esc_html($titulo_boton) . '</span>
                             </div>
@@ -314,6 +329,37 @@ add_filter('wpcf7_form_tag', function ($tag) {
 
     return $tag;
 });
+
+/* Insertar divs padres a legales */
+function clipam_wrap_tables_only_legales($content) {
+
+    if (is_admin()) {
+        return $content;
+    }
+
+    if (!is_singular('legales')) {
+        return $content;
+    }
+
+    if (strpos($content, 'table-scroll') !== false) {
+        return $content;
+    }
+
+    $content = preg_replace(
+        '/<table([^>]*)>/i',
+        '<div class="table-scroll"><table$1>',
+        $content
+    );
+
+    $content = preg_replace(
+        '/<\/table>/i',
+        '</table></div>',
+        $content
+    );
+
+    return $content;
+}
+add_filter('the_content', 'clipam_wrap_tables_only_legales', 20);
 
 /* Obtener ID de un video de Youtube de cualqueir URL valida */
 function get_youtube_id($url)
