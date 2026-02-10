@@ -56,6 +56,12 @@ body {
   position: relative;
 }
 
+@media screen and (max-width: 600px) {
+  #wpadminbar {
+    position: fixed;
+  }
+}
+
 body.no-scroll {
   overflow: hidden;
 }
@@ -172,6 +178,37 @@ table th {
 
 table thead tr td {
   background-color: #f1f3f5;
+}
+
+/* INPUT - ARCHIVOS */
+.custom-file-upload {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--primario-azul);
+  border-radius: 8px;
+  padding: 10px 8px;
+  cursor: pointer;
+  min-height: 40px;
+  flex-wrap: wrap;
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .file-names {
+    flex-basis: 100%;
+    padding-top: 10px;
+  }
+}
+
+.upload-button {
+  background: #efefef;
+  border: 1px solid #767676;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-right: 10px;
 }
 
 .btn {
@@ -1072,55 +1109,108 @@ table thead tr td {
 }
 
 .wpcf7 .wpcf7-response-output {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  width: 100%;
-  height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.6);
-  border: unset !important;
-  font-size: 1.6rem;
-  font-weight: 400;
-}
-
-.wpcf7 form .wpcf7-response-output {
-  padding: 10px;
-  margin: 0;
-}
-
-.wpcf7 form .wpcf7-response-output .cf7-msg {
-  background-color: var(--blanco);
-  border-radius: 20px;
-  padding: 10px;
-  display: flex;
-  gap: 8px;
-  width: 600px;
-  max-width: 100%;
-}
-
-.wpcf7 form .wpcf7-response-output .cf7-msg .icono svg {
-  width: 100%;
-  height: 100%;
-}
-
-/* .wpcf7 form.invalid .wpcf7-response-output {
   display: none !important;
-} */
-
-/* .wpcf7 form.sent .wpcf7-response-output {
-  background-color: #46b450;
 }
 
-.wpcf7 form.invalid .wpcf7-response-output {
-  background-color: #ffb900;
-} */
+#modal-contactanos .modal__container.modal-loading {
+  background: unset;
+  box-shadow: none;
+  transition: unset;
+}
 
-/* .wpcf7 form.unaccepted .wpcf7-response-output,
-.wpcf7 form.payment-required .wpcf7-response-output {} */
+#modal-contactanos .modal__container.modal-result {
+  background: white;
+}
+
+.loader {
+  position: relative;
+  width: 94px;
+  height: 94px;
+  border-radius: 10px;
+}
+
+.loader div {
+  width: 8%;
+  height: 24%;
+  background: rgb(255, 255, 255);
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  opacity: 0;
+  border-radius: 50px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  animation: fade458 1s linear infinite;
+}
+
+@keyframes fade458 {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.25;
+  }
+}
+
+.loader .bar1 {
+  transform: rotate(0deg) translate(0, -130%);
+  animation-delay: 0s;
+}
+
+.loader .bar2 {
+  transform: rotate(30deg) translate(0, -130%);
+  animation-delay: -1.1s;
+}
+
+.loader .bar3 {
+  transform: rotate(60deg) translate(0, -130%);
+  animation-delay: -1s;
+}
+
+.loader .bar4 {
+  transform: rotate(90deg) translate(0, -130%);
+  animation-delay: -0.9s;
+}
+
+.loader .bar5 {
+  transform: rotate(120deg) translate(0, -130%);
+  animation-delay: -0.8s;
+}
+
+.loader .bar6 {
+  transform: rotate(150deg) translate(0, -130%);
+  animation-delay: -0.7s;
+}
+
+.loader .bar7 {
+  transform: rotate(180deg) translate(0, -130%);
+  animation-delay: -0.6s;
+}
+
+.loader .bar8 {
+  transform: rotate(210deg) translate(0, -130%);
+  animation-delay: -0.5s;
+}
+
+.loader .bar9 {
+  transform: rotate(240deg) translate(0, -130%);
+  animation-delay: -0.4s;
+}
+
+.loader .bar10 {
+  transform: rotate(270deg) translate(0, -130%);
+  animation-delay: -0.3s;
+}
+
+.loader .bar11 {
+  transform: rotate(300deg) translate(0, -130%);
+  animation-delay: -0.2s;
+}
+
+.loader .bar12 {
+  transform: rotate(330deg) translate(0, -130%);
+  animation-delay: -0.1s;
+}
 
 /* Pagina Nosotros */
 /* Hero */
@@ -2062,7 +2152,8 @@ button:disabled {
 }
 
 .form__book__container .field-textarea br,
-.form__book__container .info_container br {
+.form__book__container .info_container br,
+.group-form .group br {
   display: none;
 }
 

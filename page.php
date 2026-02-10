@@ -214,6 +214,18 @@
     </div>
 </div>
 
+<!-- Modal Mensajes Emergentes -->
+<div class="modal micromodal-slide" id="modal-contactanos" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-contactanos-title">
+            <header class="modal__header">
+            </header>
+            <main class="modal__content text-primary" id="modal-contactanos-content">
+            </main>
+        </div>
+    </div>
+</div>
+
 <?php get_footer(); ?>
 
 <script>
