@@ -2390,10 +2390,6 @@ button:disabled {
     width: 40%;
   }
 
-  .hero .text-primary {
-    color: var(--blanco);
-  }
-
   .hero .buscador {
     width: 50%;
   }
@@ -2410,6 +2406,10 @@ button:disabled {
 
   .card .imagen {
     width: 45%;
+  }
+
+  .hero .text-primary {
+    color: var(--blanco);
   }
 }
 
@@ -2461,7 +2461,7 @@ button:disabled {
     position: absolute;
     z-index: 2;
     padding: 80px;
-    width: 100%;
+    width: 85%;
   }
 
   .hero .right {
@@ -2502,6 +2502,7 @@ button:disabled {
 
   .hero .left {
     padding: 20px;
+    padding-bottom: 50px;
   }
 }
 

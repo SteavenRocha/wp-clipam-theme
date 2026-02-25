@@ -137,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+/* Cambia de posicion el captcha */
 document.addEventListener('DOMContentLoaded', () => {
 
     const form = document.querySelector('.wpcf7-form');
@@ -147,6 +148,13 @@ document.addEventListener('DOMContentLoaded', () => {
         form.insertBefore(turnstile, submitWrapper);
     }
 
+});
+
+/* Validaciones formularios */
+document.addEventListener('input', function (e) {
+    if (e.target.name === 'your-phone') {
+        e.target.value = e.target.value.replace(/\D/g, '');
+    }
 });
 
 /* REDIRECCION PRIMER ERROR */

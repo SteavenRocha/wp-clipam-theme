@@ -232,27 +232,26 @@
     const progressCircle = document.querySelector(".autoplay-progress svg");
     const progressContent = document.querySelector(".autoplay-progress span");
 
+    const slides = document.querySelectorAll('.swiper .swiper-slide');
+    const tieneMultiplesSlides = slides.length > 1;
+
     const swiper = new Swiper('.swiper', {
-        loop: true,
+        loop: tieneMultiplesSlides,
         spaceBetween: 20,
-        autoplay: {
+        autoplay: tieneMultiplesSlides ? {
             delay: 6000,
             disableOnInteraction: false,
-        },
+        } : false,
         pagination: {
             el: '.swiper-pagination',
             clickable: true,
         },
-        /*  navigation: {
-             nextEl: '.swiper-button-next',
-             prevEl: '.swiper-button-prev',
-         }, */
-        on: {
+        on: tieneMultiplesSlides ? {
             autoplayTimeLeft(s, time, progress) {
                 progressCircle.style.setProperty("--progress", 1 - progress);
                 progressContent.textContent = `${Math.ceil(time / 1000)}s`;
             }
-        }
+        } : {}
     });
 
     // Formulario
