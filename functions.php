@@ -397,3 +397,44 @@ add_filter('login_headertext', function () {
 });
 
 add_action('login_enqueue_scripts', 'custom_login_logo');
+
+/* Contenido respuesta mensajes correo */
+function enqueue_main_js() {
+
+    $respuesta_exito   = get_field('respuesta_exito', 'informacion-general');
+    $respuesta_error   = get_field('respuesta_error', 'informacion-general');
+    $respuesta_spam    = get_field('respuesta_spam', 'informacion-general');
+    $respuesta_default = get_field('respuesta_default', 'informacion-general');
+
+    wp_localize_script('main-js', 'cfMensajes', [
+        'mail_sent' => [
+            'titulo'      => $respuesta_exito['titulo_respuesta'] ?? '',
+            'descripcion' => nl2br($respuesta_exito['descripcion_respuesta'] ?? ''),
+        ],
+        'mail_failed' => [
+            'titulo'      => $respuesta_error['titulo_respuesta'] ?? '',
+            'descripcion' => nl2br($respuesta_error['descripcion_respuesta'] ?? ''),
+        ],
+        'spam' => [
+            'titulo'      => $respuesta_spam['titulo_respuesta'] ?? '',
+            'descripcion' => nl2br($respuesta_spam['descripcion_respuesta'] ?? ''),
+        ],
+        'default' => [
+            'titulo'      => $respuesta_default['titulo_respuesta'] ?? '',
+            'descripcion' => nl2br($respuesta_default['descripcion_respuesta'] ?? ''),
+        ],
+    ]);
+}
+add_action('wp_enqueue_scripts', 'enqueue_main_js');
+
+add_filter('wpcf7_spam', function ($is_spam, $submission) {
+
+    $data = $submission->get_posted_data();
+
+    if (isset($data['your-email']) && str_contains($data['your-email'], 'spamtest')) {
+        return true;
+    }
+
+    return $is_spam;
+
+}, 10, 2);

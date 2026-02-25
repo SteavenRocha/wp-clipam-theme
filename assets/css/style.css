@@ -1056,7 +1056,7 @@ table thead tr td {
   font-size: 1.8rem;
   line-height: 1.5;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 10px;
   border: none;
 }
 
@@ -1095,6 +1095,10 @@ table thead tr td {
   width: max-content;
 }
 
+#wpcf7-f527-o1 p:last-of-type .wpcf7-submit {
+  margin-top: -50px;
+}
+
 .wpcf7 .wpcf7-spinner {
   position: absolute;
   top: calc(50% + 10px);
@@ -1119,6 +1123,7 @@ table thead tr td {
 }
 
 #modal-contactanos .modal__container.modal-result {
+  max-width: 550px;
   background: white;
 }
 
@@ -1210,6 +1215,37 @@ table thead tr td {
 .loader .bar12 {
   transform: rotate(330deg) translate(0, -130%);
   animation-delay: -0.1s;
+}
+
+#modal-contactanos .modal__mensaje {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Iconos contactanos */
+#modal-contactanos .modal__icon {
+  width: 65px;
+  height: 65px;
+  background-color: rgba(128, 128, 128, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+#modal-contactanos .modal__icon.success {
+  color: #10b981;
+}
+
+#modal-contactanos .modal__icon.error {
+  color: #dc2626;
+}
+
+#modal-contactanos .modal__icon.spam {
+  color: #f59e0b;
+}
+
+#modal-contactanos .modal__icon.default {
+  color: var(--primario-azul);
 }
 
 /* Pagina Nosotros */
