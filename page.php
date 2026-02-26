@@ -35,7 +35,7 @@
                                 </picture>
                             <?php endif; ?>
 
-                            <div class="left text-primary w-4 g-3">
+                            <div class="left text-primary w-4 g-3 pb-5">
                                 <div>
                                     <?php if ($titulo): ?>
                                         <h1 class="tiny-lh"><?php echo nl2br(esc_html($titulo)); ?></h1>

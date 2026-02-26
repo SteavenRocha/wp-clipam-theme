@@ -12,7 +12,7 @@ $query = new WP_Query($args);
 
 <main class="seccion p-t">
     <section class="contenedor hero bg-azul-cielo">
-        <div class="left text-white g-0">
+        <div class="left text-white g-0 hero-type-2">
             <?php if (get_field('titulo')) { ?>
                 <h1 class="tiny-lh"><?php the_field('titulo'); ?></h1>
             <?php } ?>

@@ -26,7 +26,7 @@ if ($query->have_posts()) {
 <main class="seccion pd-l-1 p-t">
 
     <section class="contenedor hero bg-turqueza">
-        <div class="left text-primary">
+        <div class="left text-primary hero-type-2">
             <div>
                 <?php if (get_field('titulo')) { ?>
                     <h1 class="tiny-lh"><?php the_field('titulo'); ?></h1>

@@ -299,6 +299,12 @@ table thead tr td {
   padding-bottom: 0;
 }
 
+@media (max-width: 768px) {
+  .pb-5 {
+    padding-bottom: 50px !important;
+  }
+}
+
 .mb-0 {
   margin-bottom: 0;
 }
@@ -2393,6 +2399,11 @@ button:disabled {
   .hero .buscador {
     width: 50%;
   }
+
+  .hero .left.hero-type-2 {
+    width: 100%;
+    color: var(--blanco);
+  }
 }
 
 @media (max-width: 768px) {
@@ -2502,7 +2513,6 @@ button:disabled {
 
   .hero .left {
     padding: 20px;
-    padding-bottom: 50px;
   }
 }
 
