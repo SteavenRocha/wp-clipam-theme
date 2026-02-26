@@ -17,14 +17,15 @@ $query = new WP_Query($args);
 <main class="seccion pb-0 nosotros p-t">
     <section class="contenedor hero-media">
         <?php
-        $video_url = get_field('url_video');
+        $video_url = get_field('video_url_group');
         $video = get_field('video_group');
         $imagen = get_field('imagen_hero');
         ?>
 
-        <?php if ($video_url): ?>
+        <?php if ($video_url['video_url']): ?>
             <?php
-            $youtube_id = get_youtube_id($video_url);
+            $youtube_id = get_youtube_id($video_url['video_url']);
+            $video_url_poster = $video_url['video_poster_url'];
             ?>
 
             <?php if ($youtube_id): ?>
@@ -34,21 +35,27 @@ $query = new WP_Query($args);
                         tabindex="0"
                         data-youtube="<?php echo esc_attr($youtube_id); ?>">
 
-                        <!-- <img
-                            src="https://img.youtube.com/vi/<?php echo esc_attr($youtube_id); ?>/hqdefault.jpg"
-                            alt="Miniatura del video"
-                            class="video-poster"> -->
+                        <?php if (!empty($video_url_poster)): ?>
 
-                        <img
-                            src="https://img.youtube.com/vi/<?php echo esc_attr($youtube_id); ?>/maxresdefault.jpg"
-                            onload="if(this.naturalWidth <= 120) { this.src='https://img.youtube.com/vi/<?php echo esc_attr($youtube_id); ?>/hqdefault.jpg'; }"
-                            class="video-poster"
-                            alt="Miniatura del video">
+                            <?php echo wp_get_attachment_image($imagen, 'full', false, [
+                                'class' => 'imagen-hero'
+                            ]); ?>
+
+                        <?php else: ?>
+
+                            <img
+                                src="https://img.youtube.com/vi/<?php echo esc_attr($youtube_id); ?>/maxresdefault.jpg"
+                                onload="if(this.naturalWidth <= 120) { this.src='https://img.youtube.com/vi/<?php echo esc_attr($youtube_id); ?>/hqdefault.jpg'; }"
+                                class="video-poster"
+                                alt="Miniatura del video">
+
+                        <?php endif; ?>
 
                         <div class="video-overlay">
                             <span class="video-play">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path fill="currentColor" d="m10.65 15.75l4.875-3.125q.35-.225.35-.625t-.35-.625L10.65 8.25q-.375-.25-.763-.038t-.387.663v6.25q0 .45.388.663t.762-.038M12 22q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22" />
+                                    <path fill="currentColor"
+                                        d="m10.65 15.75l4.875-3.125q.35-.225.35-.625t-.35-.625L10.65 8.25q-.375-.25-.763-.038t-.387.663v6.25q0 .45.388.663t.762-.038M12 22q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22" />
                                 </svg>
                             </span>
                             <p class="video-text">Haz click para reproducir</p>
@@ -56,7 +63,6 @@ $query = new WP_Query($args);
                     </div>
                 </div>
             <?php endif; ?>
-
 
         <?php elseif ($video['video'] && $video['video_poster']): ?>
             <?php

@@ -82,9 +82,7 @@ $query = new WP_Query($args);
     document.addEventListener('DOMContentLoaded', () => {
 
         const isMobile =
-            window.matchMedia('(max-width: 767px)').matches &&
-            window.matchMedia('(hover: none)').matches &&
-            window.matchMedia('(pointer: coarse)').matches;
+            window.matchMedia('(max-width: 767px)').matches
 
         if (!isMobile) return;
 
@@ -97,7 +95,7 @@ $query = new WP_Query($args);
                     entry.target.classList.toggle('is-active', entry.isIntersecting);
                 });
             }, {
-                threshold: 0.9,
+                threshold: 1,
             }
         );
 

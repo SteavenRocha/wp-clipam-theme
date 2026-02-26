@@ -23,23 +23,26 @@
 
                 <div class="meta-noticia">
                     <span class="autor">
-                        <?php if ($icono_autor): ?>
-                            <img src="<?php echo esc_url($icono_autor); ?>" alt="" class="icono icono-meta">
-                        <?php endif; ?>
+                        <img
+                            src="<?php echo get_template_directory_uri(); ?>/assets/img/user.svg"
+                            alt="Icono"
+                            class="icono icono-meta">
                         <?php the_author(); ?>
                     </span>
 
                     <span class="fecha">
-                        <?php if ($icono_fecha): ?>
-                            <img src="<?php echo esc_url($icono_fecha); ?>" alt="" class="icono icono-meta">
-                        <?php endif; ?>
+                        <img
+                            src="<?php echo get_template_directory_uri(); ?>/assets/img/calendar.svg"
+                            alt="Icono"
+                            class="icono icono-meta">
                         <?php echo get_the_date('d M Y'); ?>
                     </span>
 
                     <span class="hora">
-                        <?php if ($icono_hora): ?>
-                            <img src="<?php echo esc_url($icono_hora); ?>" alt="" class="icono icono-meta">
-                        <?php endif; ?>
+                        <img
+                            src="<?php echo get_template_directory_uri(); ?>/assets/img/clock.svg"
+                            alt="Icono"
+                            class="icono icono-meta">
                         <?php echo get_the_time('H:i'); ?>
                     </span>
                 </div>

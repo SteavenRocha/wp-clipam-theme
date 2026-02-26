@@ -152,7 +152,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* Validaciones formularios */
 document.addEventListener('input', function (e) {
-    if (e.target.name === 'your-phone') {
+    if (e.target.name === 'your-phone' || e.target.name === 'numero_doc_reclamante'
+        || e.target.name === 'numero_doc_afectado' || e.target.name === 'celular_reclamante'
+        || e.target.name === 'celular_afectado'
+    ) {
         e.target.value = e.target.value.replace(/\D/g, '');
     }
 });

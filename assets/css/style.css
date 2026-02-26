@@ -80,10 +80,12 @@ h1 {
   font-size: clamp(3.5rem, 4vw + 1rem, 4.8rem);
 }
 
-.hero h1 {
-  hyphens: auto;
-  word-break: normal;
-  overflow-wrap: break-word;
+@media (max-width: 480px) {
+  .hero h1 {
+    hyphens: auto;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
 }
 
 h2 {
@@ -1844,6 +1846,7 @@ button:disabled {
 .single-noticia .meta-noticia .icono-meta {
   width: 20px;
   height: 20px;
+  pointer-events: none;
 }
 
 .single-noticia .meta-noticia .autor,
@@ -2526,7 +2529,7 @@ button:disabled {
   }
 } */
 
-@media (max-width: 767px) and (hover: none) and (pointer: coarse) {
+@media (max-width: 767px) {
   .servicios .card.is-active p {
     opacity: 1;
   }

@@ -21,7 +21,8 @@ function clipam_menus()
 
 add_action('init', 'clipam_menus');
 
-function clipam_filtrar_menu_paginas_no_publicadas($items, $args) {
+function clipam_filtrar_menu_paginas_no_publicadas($items, $args)
+{
 
     foreach ($items as $key => $item) {
 
@@ -331,7 +332,8 @@ add_filter('wpcf7_form_tag', function ($tag) {
 });
 
 /* Insertar divs padres a legales */
-function clipam_wrap_tables_only_legales($content) {
+function clipam_wrap_tables_only_legales($content)
+{
 
     if (is_admin()) {
         return $content;
@@ -399,7 +401,8 @@ add_filter('login_headertext', function () {
 add_action('login_enqueue_scripts', 'custom_login_logo');
 
 /* Contenido respuesta mensajes correo */
-function enqueue_main_js() {
+function enqueue_main_js()
+{
 
     $respuesta_exito   = get_field('respuesta_exito', 'informacion-general');
     $respuesta_error   = get_field('respuesta_error', 'informacion-general');
@@ -427,6 +430,7 @@ function enqueue_main_js() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_main_js');
 
+/* Test correo spam */
 add_filter('wpcf7_spam', function ($is_spam, $submission) {
 
     $data = $submission->get_posted_data();
@@ -436,5 +440,69 @@ add_filter('wpcf7_spam', function ($is_spam, $submission) {
     }
 
     return $is_spam;
-
 }, 10, 2);
+
+// 1. Mover el archivo a una carpeta permanente al enviar el formulario
+add_action('wpcf7_before_send_mail', function ($contact_form) {
+    $submission = WPCF7_Submission::get_instance();
+    if (! $submission) return;
+
+    $uploaded_files = $submission->uploaded_files();
+    if (empty($uploaded_files)) return;
+
+    $upload_dir = wp_upload_dir();
+    $dir_path = $upload_dir['basedir'] . '/flamingo_custom_uploads';
+
+    // Crear la carpeta si no existe
+    if (! file_exists($dir_path)) {
+        wp_mkdir_p($dir_path);
+        // Crear un index.php vacío por seguridad
+        file_put_contents($dir_path . '/index.php', '');
+    }
+
+    foreach ($uploaded_files as $field_name => $file_paths) {
+        foreach ((array) $file_paths as $file_path) {
+            $file_name = basename($file_path);
+            copy($file_path, $dir_path . '/' . $file_name);
+        }
+    }
+}, 10, 1);
+
+/* Envio dinamico por correo del nombre de reclamante */
+add_filter('wpcf7_mail_components', function ($components, $contact_form) {
+
+    $submission = WPCF7_Submission::get_instance();
+    if (!$submission) return $components;
+
+    $data = $submission->get_posted_data();
+
+    $ape_paterno = trim($data['ape_paterno_reclamante'] ?? '');
+    $ape_materno = trim($data['ape_materno_reclamante'] ?? '');
+    $nombres     = trim($data['nombres_reclamante'] ?? '');
+    $razon       = trim($data['razon_social_reclamante'] ?? '');
+
+    if ($razon === '-' || $razon === '') {
+
+        $nombre_completo = trim("$ape_paterno $ape_materno $nombres");
+    } else {
+        $nombre_completo = $razon;
+    }
+
+    $components['body'] = str_replace(
+        '[nombre_reclamante_final]',
+        $nombre_completo,
+        $components['body']
+    );
+
+    return $components;
+}, 10, 2);
+
+/* Cambio de nombre de Flamingo */
+add_action('admin_menu', function () {
+    global $menu;
+    foreach ($menu as $key => $value) {
+        if ($menu[$key][0] == 'Flamingo') {
+            $menu[$key][0] = 'Mensajes';
+        }
+    }
+});

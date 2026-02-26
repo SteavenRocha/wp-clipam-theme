@@ -55,32 +55,59 @@
             if (input) input.value = value;
         }
 
+        function getInput(name) {
+            return document.querySelector(`[name="${name}"]`);
+        }
+
+        function estaSincronizado(prefix) {
+            const selectRelacion = getInput('afectado_mismo_reclamante');
+            return prefix === 'afectado' && selectRelacion && selectRelacion.value === 'Si';
+        }
+
+        /* ================================
+           TOGGLE PERSONA / EMPRESA
+        ================================== */
+
         function configurarToggle(selectName, personaClass, empresaClass, prefix) {
 
-            const select = document.querySelector(`[name="${selectName}"]`);
+            const select = getInput(selectName);
             const grupoPersona = document.querySelector(personaClass);
             const grupoEmpresa = document.querySelector(empresaClass);
 
             if (!select) return;
 
             function toggle() {
+
                 const valor = select.value;
 
                 grupoPersona.style.display = 'none';
                 grupoEmpresa.style.display = 'none';
 
+                if (!estaSincronizado(prefix)) {
+                    setValueIfExists(`razon_social_${prefix}`, '');
+                    setValueIfExists(`ape_paterno_${prefix}`, '');
+                    setValueIfExists(`ape_materno_${prefix}`, '');
+                    setValueIfExists(`nombres_${prefix}`, '');
+                }
+
                 if (['DNI', 'CE', 'Pasaporte'].includes(valor)) {
 
                     grupoPersona.style.display = 'flex';
-                    setValueIfExists(`razon_social_${prefix}`, '-');
+
+                    if (!estaSincronizado(prefix)) {
+                        setValueIfExists(`razon_social_${prefix}`, '-');
+                    }
                 }
 
                 if (valor === 'RUC') {
 
                     grupoEmpresa.style.display = 'flex';
-                    setValueIfExists(`ape_paterno_${prefix}`, '-');
-                    setValueIfExists(`ape_materno_${prefix}`, '-');
-                    setValueIfExists(`nombres_${prefix}`, '-');
+
+                    if (!estaSincronizado(prefix)) {
+                        setValueIfExists(`ape_paterno_${prefix}`, '-');
+                        setValueIfExists(`ape_materno_${prefix}`, '-');
+                        setValueIfExists(`nombres_${prefix}`, '-');
+                    }
                 }
             }
 
@@ -102,10 +129,11 @@
             'afectado'
         );
 
-    });
+        /* ================================
+           SINCRONIZAR AFECTADO = RECLAMANTE
+        ================================== */
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const selectRelacion = document.querySelector('[name="afectado_mismo_reclamante"]');
+        const selectRelacion = getInput('afectado_mismo_reclamante');
 
         if (!selectRelacion) return;
 
@@ -128,16 +156,15 @@
 
             campos.forEach(([from, to]) => {
 
-                const origen = document.querySelector(`[name="${from}"]`);
-                const destino = document.querySelector(`[name="${to}"]`);
+                const origen = getInput(from);
+                const destino = getInput(to);
 
                 if (!origen || !destino) return;
 
                 destino.value = origen.value;
 
-                destino.dispatchEvent(new Event('change'));
-
                 if (destino.tagName === 'SELECT') {
+                    destino.dispatchEvent(new Event('change'));
                     destino.style.pointerEvents = 'none';
                     destino.style.backgroundColor = '#F3F4F6';
                 } else {
@@ -148,9 +175,9 @@
 
         function limpiarValores() {
 
-            campos.forEach(([from, to]) => {
+            campos.forEach(([_, to]) => {
 
-                const destino = document.querySelector(`[name="${to}"]`);
+                const destino = getInput(to);
                 if (!destino) return;
 
                 destino.value = '';
@@ -158,6 +185,7 @@
                 if (destino.tagName === 'SELECT') {
                     destino.style.pointerEvents = 'auto';
                     destino.style.backgroundColor = 'white';
+                    destino.dispatchEvent(new Event('change'));
                 } else {
                     destino.readOnly = false;
                 }
@@ -165,7 +193,6 @@
         }
 
         function toggleSync() {
-
             if (selectRelacion.value === 'Si') {
                 copiarValores();
             } else {
@@ -176,15 +203,19 @@
         selectRelacion.addEventListener('change', toggleSync);
 
         campos.forEach(([from]) => {
-            const origen = document.querySelector(`[name="${from}"]`);
+            const origen = getInput(from);
             if (origen) {
                 origen.addEventListener('input', () => {
+                    if (selectRelacion.value === 'Si') copiarValores();
+                });
+                origen.addEventListener('change', () => {
                     if (selectRelacion.value === 'Si') copiarValores();
                 });
             }
         });
 
         toggleSync();
+
     });
 
     /* Contador de caracteres */
@@ -212,7 +243,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
 
-        const input = document.querySelector('input[name="archivo_reclamo"]');
+        const input = document.querySelector('input[name="archivo_adjunto"]');
         if (!input) return;
 
         const uploadWrapper = input.closest('.custom-file-upload');
@@ -221,7 +252,7 @@
         const fileNamesSpan = uploadWrapper.querySelector('.file-names');
 
         input.multiple = true;
-        input.name = 'archivo_reclamo[]';
+        input.name = 'archivo_adjunto[]';
 
         const MAX_FILES = 4;
         const MAX_FILE_SIZE = 3 * 1024 * 1024;
@@ -305,6 +336,12 @@
             }
 
             renderFileNames(this.files);
+        });
+
+        document.addEventListener('wpcf7mailsent', function(event) {
+            if (event.target.querySelector('input[name="archivo_adjunto[]"]')) {
+                resetFileNames();
+            }
         });
     });
 </script>

@@ -154,7 +154,7 @@
 <!-- Botón flotante WhatsApp -->
 <?php
 $icono_whatsapp = get_field('icono_whatsapp', 'informacion-general');
-$url_whatsapp = get_field('url_whatsapp', 'informacion-general');
+$url_whatsapp = get_field('enlace_whatsapp', 'informacion-general');
 $texto_whatsapp = get_field('texto_whatsapp', 'informacion-general');
 ?>
 
